@@ -51,6 +51,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5519391008173105395, guid: baf5d981582814f4cb172531abe5442b, type: 3}
+      propertyPath: isPlaceable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5519391008173105395, guid: baf5d981582814f4cb172531abe5442b, type: 3}
+      propertyPath: isPlaceacble
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6412899212226548999, guid: baf5d981582814f4cb172531abe5442b, type: 3}
       propertyPath: m_Name
       value: Tile_RoadCorner
