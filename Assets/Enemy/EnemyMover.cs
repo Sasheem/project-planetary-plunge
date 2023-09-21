@@ -11,8 +11,27 @@ public class EnemyMover : MonoBehaviour
 
     void Start()
     {
+        FindPath();
+        ReturnToStart();
         // begin coroutine
         StartCoroutine(FollowPath());
+    }
+
+    void FindPath() {
+        // clear path so we know it is always empty prior to being set up
+        path.Clear();
+
+        GameObject parent = GameObject.FindGameObjectWithTag("Path");
+
+        // loop through each child of the GameObject Path and add it to the list 
+        foreach (Transform child in parent.transform) {
+            path.Add(child.GetComponent<Waypoint>());
+        }
+    }
+
+    // place the enemy at start position of path
+    void ReturnToStart() {
+        transform.position = path[0].transform.position;
     }
 
     // loop through the list and print names
@@ -36,5 +55,6 @@ public class EnemyMover : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
+        Destroy(gameObject);
     }
 }
