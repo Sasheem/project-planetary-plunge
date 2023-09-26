@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
 {
     // pass in some waypoints to follow
@@ -31,13 +32,21 @@ public class EnemyMover : MonoBehaviour
 
         // loop through each child of the GameObject Path and add it to the list 
         foreach (Transform child in parent.transform) {
-            path.Add(child.GetComponent<Waypoint>());
+            Waypoint waypoint = child.GetComponent<Waypoint>();
+            if (waypoint != null) {
+                path.Add(waypoint);
+            }
         }
     }
 
     // place the enemy at start position of path
     void ReturnToStart() {
         transform.position = path[0].transform.position;
+    }
+
+    void FinishPath() {
+        enemy.StealGold();
+        gameObject.SetActive(false);
     }
 
     // loop through the list and print names
@@ -61,7 +70,6 @@ public class EnemyMover : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
-        enemy.StealGold();
-        gameObject.SetActive(false);
+        FinishPath();
     }
 }
