@@ -29,8 +29,13 @@ public class Pathfinder : MonoBehaviour
         startNode = gridManager.Grid[startCoordinates];
         destinationNode = gridManager.Grid[destinationCoordinates];
 
+        GetNewPath();
+    }
+
+    public List<Node> GetNewPath() {
+        gridManager.ResetNodes();
         BreadthFirstSearch();
-        BuildPath();
+        return BuildPath();
     }
 
     void ExploreNeighbors() {
@@ -63,7 +68,12 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
+    // search for a path
     void BreadthFirstSearch () {
+        // clear existing path
+        frontier.Clear();
+        reached.Clear();
+
         bool isRunning = true;
 
         frontier.Enqueue(startNode);
@@ -79,6 +89,7 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
+    // construct the path from BFS method above
     List<Node> BuildPath() {
         List<Node> path = new List<Node>();
         Node currentNode = destinationNode;
@@ -95,5 +106,34 @@ public class Pathfinder : MonoBehaviour
         path.Reverse();
 
         return path;
+    }
+
+    // check whether placing a tower will block a node (or enemy path?)
+    public bool WillBlockPath(Vector2Int coordinates) {
+        // make change to the node at the coords
+        // check if bfs can find a path through it
+        // if it can, return true
+        // if it cant, return false
+        if (grid.ContainsKey(coordinates)) {
+            bool previousState = grid[coordinates].isWalkable;
+
+            grid[coordinates].isWalkable = false;
+            List<Node> newPath = GetNewPath();
+            grid[coordinates].isWalkable = previousState;
+
+            // Means the path will be blocked because it wasn't able to get past the single node
+            // when it was trying to build a path
+            if(newPath.Count <= 1) {
+                // get a new path with the old state of the node we were playing with
+                GetNewPath();
+                return true;
+            }
+            
+        }
+
+        // if we couldn't find our gridManager than we haven't blocked a path AND
+        // if greater than 1 than that means it got away from it's starting node
+        // thus finding a valid path
+        return false;
     }
 }
