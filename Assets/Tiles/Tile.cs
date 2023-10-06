@@ -29,9 +29,12 @@ public class Tile : MonoBehaviour
     void OnMouseDown() {
         // checking if the node is walkable and won't block the path
         if (gridManager.GetNode(coordinates).isWalkable && !pathfinder.WillBlockPath(coordinates)) {
-            bool isPlaced = towerPrefab.CreateTower(towerPrefab, transform.position);
-            isPlaceable = !isPlaced;
-            gridManager.BlockNode(coordinates);
+            bool isCreated = towerPrefab.CreateTower(towerPrefab, transform.position);
+            // only block node if tower creation was successful
+            if (isCreated) { 
+                gridManager.BlockNode(coordinates);
+                pathfinder.NotifyReceivers();
+            }
         }
     }
 }

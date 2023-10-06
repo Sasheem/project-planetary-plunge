@@ -35,8 +35,12 @@ public class Pathfinder : MonoBehaviour
     }
 
     public List<Node> GetNewPath() {
+        return GetNewPath(startCoordinates);
+    }
+
+    public List<Node> GetNewPath(Vector2Int coordinates) {
         gridManager.ResetNodes();
-        BreadthFirstSearch();
+        BreadthFirstSearch(coordinates);
         return BuildPath();
     }
 
@@ -71,7 +75,7 @@ public class Pathfinder : MonoBehaviour
     }
 
     // search for a path
-    void BreadthFirstSearch () {
+    void BreadthFirstSearch (Vector2Int coordinates) {
         // setting both to true here so they are walkable 
         // for our pathfinding but not placeable for towers
         startNode.isWalkable = true;
@@ -83,8 +87,8 @@ public class Pathfinder : MonoBehaviour
 
         bool isRunning = true;
 
-        frontier.Enqueue(startNode);
-        reached.Add(startCoordinates, startNode);
+        frontier.Enqueue(grid[coordinates]);
+        reached.Add(coordinates, grid[coordinates]);
 
         while(frontier.Count > 0 && isRunning) {
             currentSearchNode = frontier.Dequeue();
@@ -142,5 +146,10 @@ public class Pathfinder : MonoBehaviour
         // if greater than 1 than that means it got away from it's starting node
         // thus finding a valid path
         return false;
+    }
+
+    public void NotifyReceivers() {
+        // 2nd param is a parameter for the function in the 1st param
+        BroadcastMessage("RecalculatePath", false, SendMessageOptions.DontRequireReceiver);
     }
 }
