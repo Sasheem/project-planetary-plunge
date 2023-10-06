@@ -16783,7 +16783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7171df5e6c9e94c941a70bb523c739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 10, y: 10}
+  gridSize: {x: 30, y: 30}
   unityGridSize: 10
 --- !u!4 &1450867538
 Transform:
@@ -18627,8 +18627,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 763abbade88366e4aaec12b140e5d928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startCoordinates: {x: 3, y: 3}
-  destinationCoordinates: {x: 1, y: 0}
+  startCoordinates: {x: 9, y: 6}
+  destinationCoordinates: {x: 0, y: 0}
 --- !u!4 &1620199833 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4266993512088718851, guid: baf5d981582814f4cb172531abe5442b, type: 3}
